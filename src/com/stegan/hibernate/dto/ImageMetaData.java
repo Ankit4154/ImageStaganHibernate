@@ -3,6 +3,7 @@ package com.stegan.hibernate.dto;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,8 @@ public class ImageMetaData {
 	private int fileSize;
 	@Transient //don't include below as a column
 	private String addedBy;
+	@Embedded
+	private Key key;
 
 	public int getFileId() {
 		return fileId;
@@ -70,5 +73,13 @@ public class ImageMetaData {
 
 	public void setFileSize(int fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public Key getKey() {
+		return key;
+	}
+
+	public void setKey(Key key) {
+		this.key = key;
 	}
 }

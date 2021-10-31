@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.stegan.hibernate.dto.ImageMetaData;
+import com.stegan.hibernate.dto.Key;
 
 public class ImageSteganHibernateMain {
 
@@ -19,11 +20,18 @@ public class ImageSteganHibernateMain {
 		imageDetails.setCreatedDate(new Date());
 		
 		ImageMetaData imageDetails2 = new ImageMetaData();
+		//imageDetails.setFileId(2);
 		imageDetails2.setName("Orange.jpg");
 		imageDetails2.setAddedBy("Singh");
 		imageDetails2.setFileSize(50);
 		imageDetails2.setCreatedDate(new Date());
 
+		Key key = new Key();
+		key.setPrivateKey("testing private");
+		key.setPublicKey("testing public");
+		imageDetails.setKey(key);
+		imageDetails2.setKey(key);
+		
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		try {

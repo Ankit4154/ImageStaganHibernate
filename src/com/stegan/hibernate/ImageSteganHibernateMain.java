@@ -8,7 +8,6 @@ import javax.persistence.PersistenceException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.exception.ConstraintViolationException;
 
 import com.stegan.hibernate.dto.ImageMetaData;
@@ -39,6 +38,12 @@ public class ImageSteganHibernateMain {
 			session.close();
 		}
 		
+		imageDetails = null;
+		
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		imageDetails = (ImageMetaData)session.get(ImageMetaData.class, 1);
+		System.out.println("File ID retrieved is :"+imageDetails.getFileId());
 	}
 
 }

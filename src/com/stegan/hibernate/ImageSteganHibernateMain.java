@@ -1,6 +1,9 @@
 package com.stegan.hibernate;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.PersistenceException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,10 +30,20 @@ public class ImageSteganHibernateMain {
 		imageDetails2.setCreatedDate(new Date());
 
 		Key key = new Key();
-		key.setPrivateKey("testing private");
-		key.setPublicKey("testing public");
+		key.setPrivateKey("testing private1");
+		key.setPublicKey("testing public1");
 		imageDetails.setKey(key);
 		imageDetails2.setKey(key);
+		Key key2 = new Key();
+		key2.setPrivateKey("testing private2");
+		key2.setPublicKey("testing public2");
+
+		List<Key> keyList = new ArrayList<>();
+		keyList.add(key);
+		keyList.add(key2);
+		imageDetails.setListKeys(keyList);
+		imageDetails2.setListKeys(keyList);
+		
 		
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();

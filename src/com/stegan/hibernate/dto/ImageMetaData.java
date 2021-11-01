@@ -1,13 +1,18 @@
 package com.stegan.hibernate.dto;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,6 +37,11 @@ public class ImageMetaData {
 	private String addedBy;
 	@Embedded
 	private Key key;
+	@ElementCollection
+	@JoinTable(name = "IMAGE_KEY", 
+		joinColumns = @JoinColumn(name = "IMAGE_ID")
+	)
+	private Collection<Key> listKeys = new ArrayList<>();
 
 	public int getFileId() {
 		return fileId;
@@ -81,5 +91,13 @@ public class ImageMetaData {
 
 	public void setKey(Key key) {
 		this.key = key;
+	}
+
+	public Collection<Key> getListKeys() {
+		return listKeys;
+	}
+
+	public void setListKeys(Collection<Key> listKeys) {
+		this.listKeys = listKeys;
 	}
 }

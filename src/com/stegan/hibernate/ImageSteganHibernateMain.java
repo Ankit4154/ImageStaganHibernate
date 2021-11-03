@@ -16,14 +16,14 @@ public class ImageSteganHibernateMain {
 
 	public static void main(String args[]) {
 		ImageMetaData imageDetails = new ImageMetaData();
-		//imageDetails.setFileId(1);
+		// imageDetails.setFileId(1);
 		imageDetails.setName("Apple.jpg");
 		imageDetails.setAddedBy("Ankit");
 		imageDetails.setFileSize(450);
 		imageDetails.setCreatedDate(new Date());
-		
+
 		ImageMetaData imageDetails2 = new ImageMetaData();
-		//imageDetails.setFileId(2);
+		// imageDetails.setFileId(2);
 		imageDetails2.setName("Orange.jpg");
 		imageDetails2.setAddedBy("Singh");
 		imageDetails2.setFileSize(50);
@@ -43,8 +43,7 @@ public class ImageSteganHibernateMain {
 		keyList.add(key2);
 		imageDetails.setListKeys(keyList);
 		imageDetails2.setListKeys(keyList);
-		
-		
+
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		try {
@@ -59,13 +58,12 @@ public class ImageSteganHibernateMain {
 			session.close();
 		}
 		/*
-		imageDetails = null;
-
-		session = sessionFactory.openSession();
-		session.beginTransaction();
-		imageDetails = (ImageMetaData) session.get(ImageMetaData.class, 1);
-		System.out.println("File ID retrieved is :" + imageDetails.getFileId());
-		*/
+		 * imageDetails = null;
+		 * 
+		 * session = sessionFactory.openSession(); session.beginTransaction();
+		 * imageDetails = (ImageMetaData) session.get(ImageMetaData.class, 1);
+		 * System.out.println("File ID retrieved is :" + imageDetails.getFileId());
+		 */
 	}
 
 }

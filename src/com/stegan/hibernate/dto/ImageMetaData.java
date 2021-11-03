@@ -19,28 +19,27 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-@Entity//(name = "ImageDetails")
+@Entity // (name = "ImageDetails")
 @Table(name = "IMAGE_DETAILS")
 public class ImageMetaData {
 
-	//@Column name to specify particular column name
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @Column name to specify particular column name
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FILE_ID")
 	private int fileId;
 	@Column(name = "FILE_NAME")
-	@Lob   // text in mssql, large object, CLOB(character lob)
+	@Lob // text in mssql, large object, CLOB(character lob)
 	private String name;
 	@Temporal(TemporalType.DATE) // add as date type in DB, default is timestamp
 	private Date createdDate;
 	private int fileSize;
-	@Transient //don't include below as a column
+	@Transient // don't include below as a column
 	private String addedBy;
 	@Embedded
 	private Key key;
 	@ElementCollection
-	@JoinTable(name = "IMAGE_KEY", 
-		joinColumns = @JoinColumn(name = "IMAGE_ID")
-	)
+	@JoinTable(name = "IMAGE_KEY", joinColumns = @JoinColumn(name = "IMAGE_ID"))
 	private Collection<Key> listKeys = new ArrayList<>();
 
 	public int getFileId() {

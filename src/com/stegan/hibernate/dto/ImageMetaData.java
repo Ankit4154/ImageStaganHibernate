@@ -19,6 +19,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 @Entity // (name = "ImageDetails")
 @Table(name = "IMAGE_DETAILS")
 public class ImageMetaData {
@@ -40,6 +44,8 @@ public class ImageMetaData {
 	private Key key;
 	@ElementCollection
 	@JoinTable(name = "IMAGE_KEY", joinColumns = @JoinColumn(name = "IMAGE_ID"))
+	@GenericGenerator(strategy = "org.hibernate.id.IncrementGenerator", name = "hilo-gen")
+	@CollectionId(columns = { @Column(name="KEY_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
 	private Collection<Key> listKeys = new ArrayList<>();
 
 	public int getFileId() {

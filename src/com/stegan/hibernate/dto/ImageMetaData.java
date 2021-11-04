@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,10 +43,10 @@ public class ImageMetaData {
 	private String addedBy;
 	@Embedded
 	private Key key;
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@JoinTable(name = "IMAGE_KEY", joinColumns = @JoinColumn(name = "IMAGE_ID"))
-	@GenericGenerator(strategy = "org.hibernate.id.IncrementGenerator", name = "hilo-gen")
-	@CollectionId(columns = { @Column(name="KEY_ID") }, generator = "hilo-gen", type = @Type(type = "long"))
+	//@GenericGenerator(strategy = "org.hibernate.id.IncrementGenerator", name = "id-gen")
+	//@CollectionId(columns = { @Column(name="KEY_ID") }, generator = "id-gen", type = @Type(type = "long"))
 	private Collection<Key> listKeys = new ArrayList<>();
 
 	public int getFileId() {
@@ -105,4 +106,11 @@ public class ImageMetaData {
 	public void setListKeys(Collection<Key> listKeys) {
 		this.listKeys = listKeys;
 	}
+
+	@Override
+	public String toString() {
+		return "ImageMetaData [fileId=" + fileId + ", name=" + name + ", createdDate=" + createdDate + ", fileSize="
+				+ fileSize + ", addedBy=" + addedBy + ", key=" + key + ", listKeys=" + listKeys + "]";
+	}
+	
 }

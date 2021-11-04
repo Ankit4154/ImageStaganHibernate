@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 import javax.persistence.PersistenceException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,6 +48,7 @@ public class ImageSteganHibernateMain {
 
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
+		ImageMetaData image = null;
 		try {
 			session.beginTransaction();
 			session.save(imageDetails);
@@ -57,6 +60,8 @@ public class ImageSteganHibernateMain {
 		} finally {
 			session.close();
 		}
+		
+		
 		/*
 		 * imageDetails = null;
 		 * 
@@ -64,6 +69,23 @@ public class ImageSteganHibernateMain {
 		 * imageDetails = (ImageMetaData) session.get(ImageMetaData.class, 1);
 		 * System.out.println("File ID retrieved is :" + imageDetails.getFileId());
 		 */
+		imageDetails = null;
+		session = sessionFactory.openSession();
+		imageDetails = (ImageMetaData) session.get(ImageMetaData.class, 1);
+		// closing session to raise exception
+		// Exception in thread "main" org.hibernate.LazyInitializationException: 
+		// failed to lazily initialize a collection of role: 
+		// com.stegan.hibernate.dto.ImageMetaData.listKeys, 
+		// could not initialize proxy - no Session
+		session.close();
+		// to resolve, enabled hibernate eager fetch instead of LAZY fetch
+		// using @ElementCollection(fetch = FetchType.EAGER)
+		System.out.println("size :"+imageDetails.getListKeys().size());
+		imageDetails.getListKeys()
+			.stream()
+			.map(i->i.getPrivateKey())
+			.forEach(System.out::println);
+		
 	}
 
 }
